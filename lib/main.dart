@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/core/routes/app_routes.dart';
 import 'package:shopping_app/core/theme/app_theme.dart';
+import 'package:shopping_app/features/app_section/screens/app_section.dart';
 import 'package:shopping_app/features/auth/presentation/view/screens/login_screen.dart';
 import 'package:shopping_app/features/auth/presentation/view/screens/register_screen.dart';
 
@@ -9,7 +10,7 @@ void main() {
 }
 
 class ShoppingApp extends StatelessWidget {
-  const new({super.key});
+  const ShoppingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class ShoppingApp extends StatelessWidget {
       routes: {
         AppRoutes.login: (context) => LoginScreen(),
         AppRoutes.register: (context) => RegisterScreen(),
+        AppRoutes.appSection: (context) => AppSection(),
       },
     );
   }
