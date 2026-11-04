@@ -6,6 +6,9 @@ import 'package:shopping_app/core/theme/app_theme.dart';
 import 'package:shopping_app/core/utils/app_dialog.dart';
 import 'package:shopping_app/core/widgets/custom_material_button.dart';
 import 'package:shopping_app/core/widgets/custom_text_form_field.dart';
+import 'package:shopping_app/features/auth/data/repo/data_source/auth_data_source_imp.dart';
+import 'package:shopping_app/features/auth/data/repo/repo/auth_repo_imp.dart';
+import 'package:shopping_app/features/auth/data/repo/repo/auth_repo_interface.dart';
 import 'package:shopping_app/features/auth/presentation/view_model/login/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController(text: "mohamed@gmail.com");
   final _passwordController = TextEditingController(text: "Mohamed@123");
-  final _loginCubit = LoginCubit();
+  final _loginCubit = LoginCubit(AuthRepoImp(AuthDataSourceImp()));
 
   @override
   void dispose() {

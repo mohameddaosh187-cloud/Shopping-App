@@ -6,6 +6,8 @@ import 'package:shopping_app/core/utils/app_dialog.dart';
 import 'package:shopping_app/core/widgets/custom_material_button.dart';
 import 'package:shopping_app/core/widgets/custom_text_form_field.dart';
 import 'package:shopping_app/features/auth/data/models/register_request_model.dart';
+import 'package:shopping_app/features/auth/data/repo/data_source/auth_data_source_imp.dart';
+import 'package:shopping_app/features/auth/data/repo/repo/auth_repo_imp.dart';
 import 'package:shopping_app/features/auth/presentation/view_model/register/register_cubit.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -22,7 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController(text: "mohamed@gmail.com");
   final _passwordController = TextEditingController(text: "Mohamed@123");
   final _confirmPasswordController = TextEditingController(text: "Mohamed@123");
-  final _registerCubit = RegisterCubit();
+  final _registerCubit = RegisterCubit(AuthRepoImp(AuthDataSourceImp()));
   @override
   void dispose() {
     _userNameController.dispose();
