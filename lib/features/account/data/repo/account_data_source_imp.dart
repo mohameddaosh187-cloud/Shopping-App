@@ -1,0 +1,18 @@
+import 'package:shopping_app/core/network/api_result.dart';
+import 'package:shopping_app/features/account/data/api/account_api.dart';
+import 'package:shopping_app/features/account/data/models/user_data_dto.dart';
+import 'package:shopping_app/features/account/domain/entities/user_data_entity.dart';
+import 'package:shopping_app/features/account/domain/repo/account_data_source_interface.dart';
+
+class AccountDataSourceImp implements AccountDataSourceInterface {
+  @override
+  Future<ApiResult<UserDataEntity>> getUserData() async {
+    final resDto = await AccountApi.getUserData();
+    switch (resDto) {
+      case Success<UserDataDto>():
+        return Success(resDto.data.toEntity());
+      case Error<UserDataDto>():
+        return Error(resDto.error);
+    }
+  }
+}

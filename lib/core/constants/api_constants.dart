@@ -4,4 +4,5 @@ abstract class ApiConstants {
   static String login = "/auth/signIn";
   static String categories = "/home/categories";
   static String getAllProduct = "/home/products";
+  static String getUserData = "/portfoilo/userData";
 }
