@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shopping_app/core/constants/api_constants.dart';
 import 'package:shopping_app/core/network/api_result.dart';
+import 'package:shopping_app/core/utils/app_flutter_secure_storage.dart';
 import 'package:shopping_app/features/auth/data/models/login_response_model.dart';
 import 'package:shopping_app/features/auth/data/models/register_request_model.dart';
 
@@ -42,7 +43,9 @@ abstract class AuthApi {
       );
       if (response.statusCode >= 200 && response.statusCode < 300) {
         var json = jsonDecode(response.body);
-        return Success(LoginResponseModel.fromJson(json));
+        var data = LoginResponseModel.fromJson(json);
+        await AppFlutterSecureStorage.save("Token", data.token);
+        return Success(data);
       } else {
         return Error("Error From server");
       }
