@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
+import 'package:shopping_app/core/widgets/proudect_item_widget.dart';
 import 'package:shopping_app/features/home/data/model/categories_list_model.dart';
 import 'package:shopping_app/features/home/data/repo/data_source/home_data_source_imp.dart';
 import 'package:shopping_app/features/home/data/repo/repo/home_repo_imp.dart';
@@ -18,7 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    cubit = HomeCubit(HomeRepoImp(HomeDataSourceImp()))..getAllCategories();
+    cubit = HomeCubit(HomeRepoImp(HomeDataSourceImp()))
+      ..getAllCategories()
+      ..getAllProducts();
   }
 
   @override
@@ -30,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             SizedBox(height: 100),
             BlocBuilder<HomeCubit, HomeState>(
+              buildWhen: (previous, current) =>
+                  current is HCSuccess || current is HCError,
               bloc: cubit,
               builder: (context, state) {
                 if (state is HCError) {
@@ -46,6 +51,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 6),
                       itemCount: state.categoriesList.length,
+                    ),
+                  );
+                }
+                return CircularProgressIndicator();
+              },
+            ),
+
+            BlocBuilder<HomeCubit, HomeState>(
+              buildWhen: (previous, current) =>
+                  current is HPSuccess || current is HPError,
+              bloc: cubit,
+              builder: (context, state) {
+                if (state is HPError) {
+                  return Text(state.message);
+                }
+                if (state is HPSuccess) {
+                  return Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 18,
+                        crossAxisSpacing: 30,
+                        childAspectRatio: 163 / 288,
+                      ),
+                      itemBuilder: (context, index) => ProductItemWidget(
+                        imagePath: "assets/images/product_tshirt.png",
+                        title: "Essence Mascara Lash Princess",
+                        oldPrice: 15.99,
+                        price: 12.99,
+                        rating: 4.5,
+                        onTap: () {},
+                        onFavoriteTap: () {},
+                      ),
+                      itemCount: 10,
                     ),
                   );
                 }
