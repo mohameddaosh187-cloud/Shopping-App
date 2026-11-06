@@ -25,6 +25,11 @@ class ProductItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageUri = Uri.tryParse(imagePath);
+    final isNetworkImage =
+        imageUri != null &&
+        (imageUri.scheme == 'http' || imageUri.scheme == 'https');
+
     return SizedBox(
       width: 164,
       child: InkWell(
@@ -40,12 +45,31 @@ class ProductItemWidget extends StatelessWidget {
                 children: [
                   const ColoredBox(color: Color(0xFFFCFCFC)),
                   Center(
-                    child: Image.asset(
-                      imagePath,
-                      width: 164,
-                      height: 164,
-                      fit: BoxFit.contain,
-                    ),
+                    child: isNetworkImage
+                        ? Image.network(
+                            imagePath,
+                            width: 164,
+                            height: 164,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(
+                                  Icons.image_not_supported_outlined,
+                                  size: 40,
+                                  color: Colors.grey,
+                                ),
+                          )
+                        : Image.asset(
+                            imagePath,
+                            width: 164,
+                            height: 164,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(
+                                  Icons.image_not_supported_outlined,
+                                  size: 40,
+                                  color: Colors.grey,
+                                ),
+                          ),
                   ),
                   Positioned(
                     top: 0,
