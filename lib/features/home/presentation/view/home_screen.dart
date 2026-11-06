@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_app/core/constants/constants_value.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/core/widgets/proudect_item_widget.dart';
-import 'package:shopping_app/features/home/data/model/categories_list_model.dart';
-import 'package:shopping_app/features/home/data/repo/data_source/home_data_source_imp.dart';
-import 'package:shopping_app/features/home/data/repo/repo/home_repo_imp.dart';
+import 'package:shopping_app/features/home/data/repo/home_data_source_imp.dart';
+import 'package:shopping_app/features/home/data/repo/home_repo_imp.dart';
+import 'package:shopping_app/features/home/domain/entities/categories_list_entity.dart';
+import 'package:shopping_app/features/home/domain/use_case/get_all_products_use_case.dart';
 import 'package:shopping_app/features/home/presentation/view_model/home/home_cubit.dart';
+
+import '../../domain/use_case/get_all_categories_use_case.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,9 +23,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    cubit = HomeCubit(HomeRepoImp(HomeDataSourceImp()))
-      ..getAllCategories()
-      ..getAllProducts();
+    final repo = HomeRepoImp(HomeDataSourceImp());
+    cubit =
+        HomeCubit(GetAllCategoriesUseCase(repo), GetAllProductsUseCase(repo))
+          ..getAllCategories()
+          ..getAllProducts();
   }
 
   @override
@@ -76,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         childAspectRatio: 163 / 288,
                       ),
                       itemBuilder: (context, index) => ProductItemWidget(
-                        imagePath: "assets/images/product_tshirt.png",
+                        imagePath: ConstantsValue.image,
                         title: "Essence Mascara Lash Princess",
                         oldPrice: 15.99,
                         price: 12.99,
@@ -100,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class CategoryItemWidget extends StatelessWidget {
   const CategoryItemWidget({super.key, required this.category});
-  final CategoryModel category;
+  final CategoryEntity category;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -110,10 +116,7 @@ class CategoryItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
         border: Border.all(color: AppColors.charcoal, width: 1),
       ),
-      child: Text(
-        category.name ?? "",
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
+      child: Text(category.name, style: Theme.of(context).textTheme.bodyMedium),
     );
   }
 }

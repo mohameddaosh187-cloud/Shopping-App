@@ -8,7 +8,7 @@ import 'package:shopping_app/features/home/data/model/categories_list_model.dart
 import 'package:shopping_app/features/home/data/model/products_list_model.dart';
 
 abstract class HomeApi {
-  static Future<ApiResult<CategoriesList>> getAllCategories() async {
+  static Future<ApiResult<CategoriesListDto>> getAllCategories() async {
     try {
       Uri url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.categories}");
       final token = await AppFlutterSecureStorage.getData("Token");
@@ -23,7 +23,7 @@ abstract class HomeApi {
       );
       var json = jsonDecode(response.body);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Success(CategoriesList.fromJson(json));
+        return Success(CategoriesListDto.fromJson(json));
       } else {
         return Error(json["message"]);
       }
@@ -32,7 +32,7 @@ abstract class HomeApi {
     }
   }
 
-  static Future<ApiResult<ProductsList>> getAllProducts() async {
+  static Future<ApiResult<ProductsListDto>> getAllProducts() async {
     try {
       Uri url = Uri.parse(
         "${ApiConstants.baseUrl}${ApiConstants.getAllProduct}",
@@ -49,7 +49,7 @@ abstract class HomeApi {
       );
       var json = jsonDecode(response.body);
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return Success(ProductsList.fromJson(json));
+        return Success(ProductsListDto.fromJson(json));
       } else {
         return Error(json["message"]);
       }

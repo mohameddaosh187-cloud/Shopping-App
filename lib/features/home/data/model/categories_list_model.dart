@@ -1,26 +1,38 @@
-class CategoriesList {
-  List<CategoryModel>? list;
+import 'package:shopping_app/features/home/domain/entities/categories_list_entity.dart';
 
-  CategoriesList({this.list});
+class CategoriesListDto {
+  List<CategoryDto>? list;
 
-  CategoriesList.fromJson(Map<String, dynamic> json) {
+  CategoriesListDto({this.list});
+
+  CategoriesListDto.fromJson(Map<String, dynamic> json) {
     if (json['list'] != null) {
-      list = <CategoryModel>[];
+      list = <CategoryDto>[];
       json['list'].forEach((v) {
-        list!.add(CategoryModel.fromJson(v));
+        list!.add(CategoryDto.fromJson(v));
       });
     }
   }
+  // toEntity
+  CategoriesListEntity toEntity() {
+    return CategoriesListEntity(
+      list: list?.map((e) => e.toEntity()).toList() ?? [],
+    );
+  }
 }
 
-class CategoryModel {
+class CategoryDto {
   String? slug;
   String? name;
 
-  CategoryModel({this.slug, this.name});
+  CategoryDto({this.slug, this.name});
 
-  CategoryModel.fromJson(Map<String, dynamic> json) {
+  CategoryDto.fromJson(Map<String, dynamic> json) {
     slug = json['slug'];
     name = json['name'];
+  }
+  // toEntity
+  CategoryEntity toEntity() {
+    return CategoryEntity(name: name ?? "", slug: slug ?? "");
   }
 }
