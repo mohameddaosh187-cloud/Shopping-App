@@ -10,4 +10,12 @@ class AccountRepoImp implements AccountRepoInterface {
   @override
   Future<ApiResult<UserDataEntity>> getUserData() async =>
       await _dataSource.getUserData();
+
+  @override
+  Future<ApiResult<String>> updateDataUser({
+    required String name,
+    required String image,
+    required String phone,
+  }) async =>
+      await _dataSource.updateDataUser(name: name, image: image, phone: phone);
 }

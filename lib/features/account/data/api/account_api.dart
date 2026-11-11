@@ -30,4 +30,35 @@ class AccountApi {
       return Error("Catch $e");
     }
   }
+
+  static Future<ApiResult<String>> updateDataUser({
+    required String name,
+    required String image,
+    required String phone,
+  }) async {
+    try {
+      Uri url = Uri.parse(
+        "${ApiConstants.baseUrl}${ApiConstants.updateUserData}",
+      );
+      final token = await AppFlutterSecureStorage.getData("Token");
+
+      var response = await http.post(
+        url,
+        body: jsonEncode({"name": name, "image": image, "phone": phone}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      var json = jsonDecode(response.body);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return Success(json["message"]);
+      } else {
+        return Error(json["message"]);
+      }
+    } catch (e) {
+      return Error("Catch $e");
+    }
+  }
 }

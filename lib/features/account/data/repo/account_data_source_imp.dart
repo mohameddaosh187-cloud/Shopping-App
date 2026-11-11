@@ -15,4 +15,17 @@ class AccountDataSourceImp implements AccountDataSourceInterface {
         return Error(resDto.error);
     }
   }
+
+  @override
+  Future<ApiResult<String>> updateDataUser({
+    required String name,
+    required String image,
+    required String phone,
+  }) async {
+    return await AccountApi.updateDataUser(
+      name: name,
+      image: image,
+      phone: phone,
+    );
+  }
 }
