@@ -7,7 +7,7 @@ import 'package:shopping_app/core/utils/app_flutter_secure_storage.dart';
 import 'package:shopping_app/features/account/data/models/user_data_dto.dart';
 
 class AccountApi {
-  static Future<ApiResult<UserDataDto>> getUserData() async {
+  Future<ApiResult<UserDataDto>> getUserData() async {
     try {
       Uri url = Uri.parse("${ApiConstants.baseUrl}${ApiConstants.getUserData}");
       final token = await AppFlutterSecureStorage.getData("Token");
@@ -31,7 +31,7 @@ class AccountApi {
     }
   }
 
-  static Future<ApiResult<String>> updateDataUser({
+  Future<ApiResult<String>> updateDataUser({
     required String name,
     required String image,
     required String phone,
@@ -61,4 +61,8 @@ class AccountApi {
       return Error("Catch $e");
     }
   }
+}
+
+AccountApi injectableAccountApi() {
+  return AccountApi();
 }

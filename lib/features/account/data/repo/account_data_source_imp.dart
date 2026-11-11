@@ -5,9 +5,11 @@ import 'package:shopping_app/features/account/domain/entities/user_data_entity.d
 import 'package:shopping_app/features/account/domain/repo/account_data_source_interface.dart';
 
 class AccountDataSourceImp implements AccountDataSourceInterface {
+  final AccountApi _api;
+  AccountDataSourceImp(this._api);
   @override
   Future<ApiResult<UserDataEntity>> getUserData() async {
-    final resDto = await AccountApi.getUserData();
+    final resDto = await _api.getUserData();
     switch (resDto) {
       case Success<UserDataDto>():
         return Success(resDto.data.toEntity());
@@ -22,10 +24,9 @@ class AccountDataSourceImp implements AccountDataSourceInterface {
     required String image,
     required String phone,
   }) async {
-    return await AccountApi.updateDataUser(
-      name: name,
-      image: image,
-      phone: phone,
-    );
+    return await _api.updateDataUser(name: name, image: image, phone: phone);
   }
 }
+
+AccountDataSourceInterface injectableAccountDataSource() =>
+    AccountDataSourceImp(injectableAccountApi());

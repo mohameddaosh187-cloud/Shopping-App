@@ -21,9 +21,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void initState() {
     super.initState();
-    final repo = AccountRepoImp(AccountDataSourceImp());
-    _cubit = AccountCubit(GetUserDataUseCase(repo), UpdateDataUserUseCase(repo))
-      ..getUserData();
+    _cubit = injectableAccountCubit()..getUserData();
   }
 
   @override

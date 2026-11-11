@@ -48,3 +48,8 @@ class AccountCubit extends Cubit<AccountState> {
     }
   }
 }
+
+AccountCubit injectableAccountCubit() => AccountCubit(
+  injectableGetUserDataUseCase(),
+  injectableUpdateDataUserUseCase(),
+);
