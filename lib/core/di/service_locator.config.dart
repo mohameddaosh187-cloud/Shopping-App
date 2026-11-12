@@ -28,6 +28,20 @@ import 'package:shopping_app/features/account/domain/use_case/update_data_user_u
     as _i241;
 import 'package:shopping_app/features/account/presentation/view_model/account_cubit.dart'
     as _i588;
+import 'package:shopping_app/features/home/data/repo/home_data_source_imp.dart'
+    as _i797;
+import 'package:shopping_app/features/home/data/repo/home_repo_imp.dart'
+    as _i529;
+import 'package:shopping_app/features/home/domain/repo/home_data_source_interface.dart'
+    as _i879;
+import 'package:shopping_app/features/home/domain/repo/home_repo_interface.dart'
+    as _i191;
+import 'package:shopping_app/features/home/domain/use_case/get_all_categories_use_case.dart'
+    as _i634;
+import 'package:shopping_app/features/home/domain/use_case/get_all_products_use_case.dart'
+    as _i219;
+import 'package:shopping_app/features/home/presentation/view_model/home/home_cubit.dart'
+    as _i381;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -40,8 +54,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i845.AccountDataSourceInterface>(
       () => _i166.AccountDataSourceImp(gh<_i72.AccountApi>()),
     );
+    gh.factory<_i879.HomeDataSourceInterface>(() => _i797.HomeDataSourceImp());
     gh.factory<_i416.AccountRepoInterface>(
       () => _i154.AccountRepoImp(gh<_i845.AccountDataSourceInterface>()),
+    );
+    gh.factory<_i191.HomeRepoInterface>(
+      () => _i529.HomeRepoImp(gh<_i879.HomeDataSourceInterface>()),
     );
     gh.factory<_i454.GetUserDataUseCase>(
       () => _i454.GetUserDataUseCase(gh<_i416.AccountRepoInterface>()),
@@ -53,6 +71,18 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i588.AccountCubit(
         gh<_i454.GetUserDataUseCase>(),
         gh<_i241.UpdateDataUserUseCase>(),
+      ),
+    );
+    gh.factory<_i634.GetAllCategoriesUseCase>(
+      () => _i634.GetAllCategoriesUseCase(gh<_i191.HomeRepoInterface>()),
+    );
+    gh.factory<_i219.GetAllProductsUseCase>(
+      () => _i219.GetAllProductsUseCase(gh<_i191.HomeRepoInterface>()),
+    );
+    gh.factory<_i381.HomeCubit>(
+      () => _i381.HomeCubit(
+        gh<_i634.GetAllCategoriesUseCase>(),
+        gh<_i219.GetAllProductsUseCase>(),
       ),
     );
     return this;

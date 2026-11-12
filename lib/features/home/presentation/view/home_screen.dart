@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/core/constants/constants_value.dart';
+import 'package:shopping_app/core/di/service_locator.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/core/widgets/proudect_item_widget.dart';
 import 'package:shopping_app/features/home/data/repo/home_data_source_imp.dart';
@@ -23,11 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    final repo = HomeRepoImp(HomeDataSourceImp());
-    cubit =
-        HomeCubit(GetAllCategoriesUseCase(repo), GetAllProductsUseCase(repo))
-          ..getAllCategories()
-          ..getAllProducts();
+
+    cubit = getIt<HomeCubit>()
+      ..getAllCategories()
+      ..getAllProducts();
   }
 
   @override
