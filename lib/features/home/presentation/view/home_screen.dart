@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_app/core/constants/constants_value.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/core/widgets/proudect_item_widget.dart';
 import 'package:shopping_app/features/home/domain/entities/categories_list_entity.dart';
 import 'package:shopping_app/features/home/presentation/view_model/home/home_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,7 +44,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 }
-                return CircularProgressIndicator();
+                return Skeletonizer(
+                  enabled: true,
+                  child: SizedBox(
+                    height: 40,
+                    child: ListView.separated(
+                      scrollDirection: .horizontal,
+                      itemBuilder: (context, index) =>
+                          CategoryItemWidget(category: CategoryEntity()),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 6),
+                      itemCount: 10,
+                    ),
+                  ),
+                );
               },
             ),
 
@@ -75,7 +90,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 }
-                return CircularProgressIndicator();
+                return Expanded(
+                  child: Skeletonizer(
+                    enabled: true,
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 18,
+                        crossAxisSpacing: 30,
+                        childAspectRatio: 163 / 288,
+                      ),
+                      itemBuilder: (context, index) => ProductItemWidget(
+                        imagePath: ConstantsValue.image,
+                        title: "Title Product",
+                        oldPrice: 10,
+                        price: 20,
+                        rating: 5,
+                        onTap: () {},
+                        onFavoriteTap: () {},
+                      ),
+                      itemCount: 10,
+                    ),
+                  ),
+                );
               },
             ),
           ],
