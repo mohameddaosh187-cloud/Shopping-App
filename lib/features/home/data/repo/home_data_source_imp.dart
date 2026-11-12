@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:shopping_app/core/network/api_result.dart';
 import 'package:shopping_app/features/home/data/api/home_api.dart';
 import 'package:shopping_app/features/home/data/model/categories_list_model.dart';
@@ -6,6 +7,7 @@ import 'package:shopping_app/features/home/domain/entities/categories_list_entit
 import 'package:shopping_app/features/home/domain/entities/products_list_entity.dart';
 import 'package:shopping_app/features/home/domain/repo/home_data_source_interface.dart';
 
+@Injectable(as: HomeDataSourceInterface)
 class HomeDataSourceImp implements HomeDataSourceInterface {
   @override
   Future<ApiResult<CategoriesListEntity>> getAllCategories() async {

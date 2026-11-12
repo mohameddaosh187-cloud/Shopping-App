@@ -5,12 +5,12 @@ abstract class AppColors {
   static const Color primaryOrange = Color(0xFFFF9900);
   static const Color orangeLight = Color(0xFFFFB700);
   static const Color orangeDark = Color(0xFFE67E00);
-
   // Neutral Colors
   static const Color white = Color(0xFFFFFFFF);
   static const Color offWhite = Color(0xFFF7F8FA);
   static const Color lightGray = Color(0xFFECEEF2);
   static const Color charcoal = Color(0xFF1A1A2E);
+  static const Color red = Color(0xffEF4444);
 
   // Background Colors
   static const Color background = Color(0xFFEBEBEB);
