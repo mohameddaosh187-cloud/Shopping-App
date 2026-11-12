@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_app/core/constants/constants_value.dart';
-import 'package:shopping_app/core/di/service_locator.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/core/widgets/proudect_item_widget.dart';
-import 'package:shopping_app/features/home/data/repo/home_data_source_imp.dart';
-import 'package:shopping_app/features/home/data/repo/home_repo_imp.dart';
 import 'package:shopping_app/features/home/domain/entities/categories_list_entity.dart';
-import 'package:shopping_app/features/home/domain/use_case/get_all_products_use_case.dart';
 import 'package:shopping_app/features/home/presentation/view_model/home/home_cubit.dart';
-
-import '../../domain/use_case/get_all_categories_use_case.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,16 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late HomeCubit cubit;
-  @override
-  void initState() {
-    super.initState();
-
-    cubit = getIt<HomeCubit>()
-      ..getAllCategories()
-      ..getAllProducts();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
             BlocBuilder<HomeCubit, HomeState>(
               buildWhen: (previous, current) =>
                   current is HCSuccess || current is HCError,
-              bloc: cubit,
               builder: (context, state) {
                 if (state is HCError) {
                   return Text(state.message);
@@ -67,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
             BlocBuilder<HomeCubit, HomeState>(
               buildWhen: (previous, current) =>
                   current is HPSuccess || current is HPError,
-              bloc: cubit,
               builder: (context, state) {
                 if (state is HPError) {
                   return Text(state.message);

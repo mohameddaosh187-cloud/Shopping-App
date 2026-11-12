@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/core/constants/app_assets.dart';
+import 'package:shopping_app/core/di/service_locator.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/features/account/presentation/view/account_screen.dart';
 import 'package:shopping_app/features/cart/presentation/view/cart_screen.dart';
 import 'package:shopping_app/features/favorite/presentation/view/favorite_screen.dart';
 import 'package:shopping_app/features/home/presentation/view/home_screen.dart';
+import 'package:shopping_app/features/home/presentation/view_model/home/home_cubit.dart';
 
 class AppSection extends StatefulWidget {
   const AppSection({super.key});
@@ -16,7 +19,12 @@ class AppSection extends StatefulWidget {
 class _AppSectionState extends State<AppSection> {
   int currentIndex = 0;
   List<Widget> screens = [
-    HomeScreen(),
+    BlocProvider(
+      create: (context) => getIt<HomeCubit>()
+        ..getAllCategories()
+        ..getAllProducts(),
+      child: HomeScreen(),
+    ),
     CartScreen(),
     FavoriteScreen(),
     AccountScreen(),
