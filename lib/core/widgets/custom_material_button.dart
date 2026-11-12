@@ -8,11 +8,12 @@ class CustomMaterialButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
+    this.isLoading = false,
   });
 
   final VoidCallback? onPressed;
   final String text;
-
+  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -42,7 +43,11 @@ class CustomMaterialButton extends StatelessWidget {
               borderRadius: AppTheme.borderRadiusMedium,
             ),
           ),
-          child: Text(text, style: AppTheme.authButtonText),
+          child: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(color: AppColors.offWhite),
+                )
+              : Text(text, style: AppTheme.authButtonText),
         ),
       ),
     );

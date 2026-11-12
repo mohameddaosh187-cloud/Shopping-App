@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:shopping_app/core/network/api_result.dart';
 import 'package:shopping_app/features/home/domain/entities/categories_list_entity.dart';
@@ -8,6 +9,7 @@ import 'package:shopping_app/features/home/domain/use_case/get_all_products_use_
 
 part 'home_state.dart';
 
+@injectable
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._getAllCategoriesUseCase, this._getAllProductsUseCase)
     : super(HomeInitial());

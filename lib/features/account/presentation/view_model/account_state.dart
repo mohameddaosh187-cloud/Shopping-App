@@ -16,3 +16,15 @@ class AccountError extends AccountState {
   final String error;
   AccountError(this.error);
 }
+
+class AccountUpdateLoading extends AccountState {}
+
+class AccountUpdateSuccess extends AccountState {
+  final String message;
+  AccountUpdateSuccess(this.message);
+}
+
+class AccountUpdateError extends AccountState {
+  final String error;
+  AccountUpdateError(this.error);
+}
