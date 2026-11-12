@@ -4,10 +4,6 @@ import 'package:shopping_app/core/di/service_locator.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/core/widgets/custom_material_button.dart';
 import 'package:shopping_app/core/widgets/custom_text_form_field.dart';
-import 'package:shopping_app/features/account/data/repo/account_data_source_imp.dart';
-import 'package:shopping_app/features/account/data/repo/account_repo_imp.dart';
-import 'package:shopping_app/features/account/domain/use_case/get_user_data_use_case.dart';
-import 'package:shopping_app/features/account/domain/use_case/update_data_user_use_case.dart';
 import 'package:shopping_app/features/account/presentation/view_model/account_cubit.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -18,13 +14,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  late AccountCubit _cubit;
-  @override
-  void initState() {
-    super.initState();
-    _cubit = getIt<AccountCubit>()..getUserData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +23,6 @@ class _AccountScreenState extends State<AccountScreen> {
           child: BlocBuilder<AccountCubit, AccountState>(
             buildWhen: (previous, current) =>
                 current is AccountSuccess || current is AccountError,
-            bloc: _cubit,
             builder: (context, state) {
               if (state is AccountError) {
                 return Center(child: Text(state.error));
@@ -107,7 +95,6 @@ class _AccountScreenState extends State<AccountScreen> {
                           current is AccountUpdateLoading ||
                           current is AccountUpdateSuccess ||
                           current is AccountUpdateError,
-                      bloc: _cubit,
                       listener: (context, state) {
                         if (state is AccountUpdateSuccess) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -132,7 +119,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         return CustomMaterialButton(
                           isLoading: state is AccountUpdateLoading,
                           onPressed: () async {
-                            await _cubit.updateData(
+                            await context.read<AccountCubit>().updateData(
                               name: name.text,
                               image: image,
                               phone: phone.text,

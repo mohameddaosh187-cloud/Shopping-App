@@ -4,6 +4,7 @@ import 'package:shopping_app/core/constants/app_assets.dart';
 import 'package:shopping_app/core/di/service_locator.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/features/account/presentation/view/account_screen.dart';
+import 'package:shopping_app/features/account/presentation/view_model/account_cubit.dart';
 import 'package:shopping_app/features/cart/presentation/view/cart_screen.dart';
 import 'package:shopping_app/features/favorite/presentation/view/favorite_screen.dart';
 import 'package:shopping_app/features/home/presentation/view/home_screen.dart';
@@ -27,7 +28,10 @@ class _AppSectionState extends State<AppSection> {
     ),
     CartScreen(),
     FavoriteScreen(),
-    AccountScreen(),
+    BlocProvider(
+      create: (context) => getIt<AccountCubit>()..getUserData(),
+      child: AccountScreen(),
+    ),
   ];
   @override
   Widget build(BuildContext context) {
