@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:shopping_app/core/constants/api_constants.dart';
 import 'package:shopping_app/core/network/api_result.dart';
 import 'package:shopping_app/core/utils/app_flutter_secure_storage.dart';
 import 'package:shopping_app/features/account/data/models/user_data_dto.dart';
 
+@injectable
 class AccountApi {
   Future<ApiResult<UserDataDto>> getUserData() async {
     try {
@@ -61,8 +63,4 @@ class AccountApi {
       return Error("Catch $e");
     }
   }
-}
-
-AccountApi injectableAccountApi() {
-  return AccountApi();
 }

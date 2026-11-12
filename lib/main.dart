@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/core/di/service_locator.dart';
 import 'package:shopping_app/core/routes/app_routes.dart';
 import 'package:shopping_app/core/theme/app_theme.dart';
 import 'package:shopping_app/core/utils/app_flutter_secure_storage.dart';
@@ -8,6 +9,7 @@ import 'package:shopping_app/features/auth/presentation/view/screens/register_sc
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   final token = await AppFlutterSecureStorage.getData("Token");
   String initialRoute = token == null
       ? AppRoutes.register

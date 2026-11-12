@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:shopping_app/core/network/api_result.dart';
 import 'package:shopping_app/features/account/domain/entities/user_data_entity.dart';
@@ -7,6 +8,7 @@ import 'package:shopping_app/features/account/domain/use_case/update_data_user_u
 
 part 'account_state.dart';
 
+@injectable
 class AccountCubit extends Cubit<AccountState> {
   AccountCubit(this._getUserDataUseCase, this._updateDataUserUseCase)
     : super(AccountInitial());
@@ -48,8 +50,3 @@ class AccountCubit extends Cubit<AccountState> {
     }
   }
 }
-
-AccountCubit injectableAccountCubit() => AccountCubit(
-  injectableGetUserDataUseCase(),
-  injectableUpdateDataUserUseCase(),
-);

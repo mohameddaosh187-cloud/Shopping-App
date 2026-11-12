@@ -1,9 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:shopping_app/core/network/api_result.dart';
-import 'package:shopping_app/features/account/data/repo/account_data_source_imp.dart';
 import 'package:shopping_app/features/account/domain/entities/user_data_entity.dart';
 import 'package:shopping_app/features/account/domain/repo/account_data_source_interface.dart';
 import 'package:shopping_app/features/account/domain/repo/account_repo_interface.dart';
 
+@Injectable(as: AccountRepoInterface)
 class AccountRepoImp implements AccountRepoInterface {
   final AccountDataSourceInterface _dataSource;
   AccountRepoImp(this._dataSource);
@@ -20,6 +21,3 @@ class AccountRepoImp implements AccountRepoInterface {
   }) async =>
       await _dataSource.updateDataUser(name: name, image: image, phone: phone);
 }
-
-AccountRepoInterface injectableAccountRepo() =>
-    AccountRepoImp(injectableAccountDataSource());
